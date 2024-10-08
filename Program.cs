@@ -27,33 +27,33 @@
             #region
             Console.WriteLine("2. feladat");
 
-            //DateTime dateTime = DateTime.Now;
-            //Random rand = new Random();
+            DateTime dateTime = DateTime.Now;
+            Random rand = new Random();
 
-            //string userInput = "y";
-            //while (userInput.CompareTo("y") == 0 && userInput.CompareTo("n") != 0)
-            //{
-            //    string date = dateTime.GetDateTimeFormats().First();
-            //    string numbers = string.Empty;
-            //    HashSet<int> randInt = new HashSet<int>();
+            string userInput = "y";
+            while (userInput.CompareTo("y") == 0 && userInput.CompareTo("n") != 0)
+            {
+                string date = dateTime.GetDateTimeFormats().First();
+                string numbers = string.Empty;
+                HashSet<int> randInt = new HashSet<int>();
 
-            //    while (randInt.Count != 5)
-            //        randInt.Add(rand.Next(1, 91));
+                while (randInt.Count != 5)
+                    randInt.Add(rand.Next(1, 91));
 
-            //    foreach (int n in randInt)
-            //        numbers += $"{n} ";
+                foreach (int n in randInt)
+                    numbers += $"{n} ";
 
-            //    Console.WriteLine($"On {date} numbers were: {numbers}");
-            //    File.WriteAllText(
-            //        $"{date}.txt",
-            //        $"On {date} numbers were: {numbers}",
-            //        System.Text.Encoding.UTF8
-            //    );
+                Console.WriteLine($"On {date} numbers were: {numbers}");
+                File.WriteAllText(
+                    $"{date}.txt",
+                    $"On {date} numbers were: {numbers}",
+                    System.Text.Encoding.UTF8
+                );
 
-            //    Console.Write("Another week? [y/n] => ");
-            //    userInput = Console.ReadLine()!;
-            //    dateTime = dateTime.AddDays(7);
-            //}
+                Console.Write("Another week? [y/n] => ");
+                userInput = Console.ReadLine()!;
+                dateTime = dateTime.AddDays(7);
+            }
 
             Console.WriteLine("");
             #endregion
