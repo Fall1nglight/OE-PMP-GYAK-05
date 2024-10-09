@@ -15,9 +15,19 @@
                 string[] tmpArr = line.Split('#');
                 string color = tmpArr[0];
                 string text = tmpArr[1];
-                ConsoleColor tmpColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color);
+
+                ConsoleColor tmpColor;
+                bool isValidColor = Enum.TryParse(color, true, out tmpColor);
+
+                // ha sikeres volt az átalakítás, beállítjuk a kapott értéket
+                // ellenkező esetben egy alapértelmezett (fehér) színre állítjuk
+                Console.ForegroundColor = isValidColor ? tmpColor : ConsoleColor.White;
+
                 Console.ForegroundColor = tmpColor;
                 Console.WriteLine(text);
+
+                // alternatív megoldás:
+                // ConsoleColor tmpColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color);
             }
 
             Console.WriteLine();
@@ -56,6 +66,103 @@
             }
 
             Console.WriteLine("");
+            #endregion
+
+            // 3. feladat
+            #region
+            Console.WriteLine("\n3. feladat");
+
+            List<string> instructions = new List<string>(
+                File.ReadAllText("ant_instructions.txt").Trim().Split('\n')
+            );
+
+            int x = 0;
+            int y = 0;
+            int direction = 0;
+
+            // első sor feldolgozása külön
+            string[] details = instructions.First().Split(' ');
+            x = int.Parse(details[0]);
+            y = int.Parse(details[1]);
+            direction = int.Parse(details[2]);
+
+            Console.WriteLine($"Kezdeti pozíció: (x: {x}, y: {y}), irány: {direction}°");
+
+            // további sorok feldolgozása
+            for (int i = 1; i < instructions.Count; i++)
+                HandleCommand(instructions.ElementAt(i));
+
+            Console.WriteLine($"Végső pozíció: (x: {x}, y: {y}), irány: {direction}°");
+
+            void HandleCommand(string inst)
+            {
+                string[] parts = inst.Split(' ');
+                string type = parts[0];
+                int value = int.Parse(parts[1]);
+
+                switch (type)
+                {
+                    case "go":
+                    {
+                        Move();
+                        break;
+                    }
+
+                    case "right":
+                    {
+                        direction = (direction + value) % 360;
+                        break;
+                    }
+
+                    case "left":
+                    {
+                        direction = (360 + (direction - value)) % 360;
+                        break;
+                    }
+                }
+
+                void Move()
+                {
+                    switch (direction)
+                    {
+                        // 0° -> y-tengely +
+                        case 0:
+                        {
+                            y += value;
+                            break;
+                        }
+
+                        // 360° -> y-tengely +
+                        case 360:
+                        {
+                            y += value;
+                            break;
+                        }
+
+                        // 90° -> x-tengely +
+                        case 90:
+                        {
+                            x += value;
+                            break;
+                        }
+
+                        // 180° -> y-tengely -
+                        case 180:
+                        {
+                            y -= value;
+                            break;
+                        }
+
+                        // 270° -> x-tengely -
+                        case 270:
+                        {
+                            x -= value;
+                            break;
+                        }
+                    }
+                }
+            }
+
             #endregion
 
             // 4. feladat
